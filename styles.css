@@ -1,0 +1,104 @@
+#main-viewport {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 800px;    
+    height: 800px;
+    /* overflow: hidden; */
+    border: solid 1px #000;
+}
+
+.board {
+    position: relative;
+    margin: auto;
+    margin-top: 30px;
+    height: 90%;
+    width: 90%;
+}
+
+#tile-board {
+   
+display: grid;
+grid-template-columns: repeat(var(--board-size), 1fr);
+aspect-ratio: 1/1;
+   
+    /* border: solid 1px #AA0;
+    display: flex;
+    
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
+    
+    aspect-ratio: 1/1;
+    gap: 1px; */
+}
+
+.board-tile {
+    
+    position: relative;
+    font-size: 10px;
+    text-align: center;
+    background-color: #FFF;
+    border: solid 1px #000;
+
+    aspect-ratio: 1/1;
+    /* flex: 1 0 calc(100% / var(--board-size) - 1px); */
+
+    
+
+}
+
+#player-board * {
+    position: absolute;
+}
+
+.window {
+    border: solid 1px #000;
+    width: 200px;
+    height: 200px;
+    padding: 15px;
+    position: absolute;
+}
+
+#tile-properties-window {
+    
+    right: 250px;
+}
+
+#add-pawn-window {
+    right: 250px;
+    bottom: 200px;
+}
+
+#pawn-name-input {
+    width: 80px;
+    display: block;
+}
+
+.pawn-tile-input {
+    width: 40px;
+    display: block;
+}
+
+#pawn-window {
+    left: 250px;
+}
+
+#player-window {
+    left: 250px;
+    bottom: 200px;
+    
+}
+
+
+
+.pawn {
+    border-radius: 50%;
+    background-color: black;
+    width: 20px;
+    height: 20px;
+    
+}
