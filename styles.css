@@ -1,3 +1,4 @@
+
 #main-viewport {
     margin: auto;
     position: absolute;
@@ -20,20 +21,10 @@
 }
 
 #tile-board {
-   
 display: grid;
 grid-template-columns: repeat(var(--board-size), 1fr);
 aspect-ratio: 1/1;
-   
-    /* border: solid 1px #AA0;
-    display: flex;
-    
-    flex-wrap: wrap;
-    flex-direction: column-reverse;
-    justify-content: space-evenly;
-    
-    aspect-ratio: 1/1;
-    gap: 1px; */
+
 }
 
 .board-tile {
@@ -51,9 +42,24 @@ aspect-ratio: 1/1;
 
 }
 
+.board-tile:hover  {
+    background-image: radial-gradient(transparent 60%, black);
+}
+
+
 #player-board * {
     position: absolute;
 }
+
+#custom-context-menu {
+    display: none;
+    border: dotted 1px #000;
+    background-color: black;
+    position: absolute;
+    width: 50px;
+    height: 200px;
+}
+
 
 .window {
     border: solid 1px #000;
@@ -63,34 +69,27 @@ aspect-ratio: 1/1;
     position: absolute;
 }
 
+#debug-window {
+    top: 350px;
+    right: 50px;
+    width: 400px;
+    height: 480px;
+    background-color: black;
+    color: lime;
+    font-family: "Monospace", "Courier New";
+    display: flex;
+    flex-direction: column;
+    line-height: 15px;
+    overflow-y: scroll;
+
+}
+
+
+
 #tile-properties-window {
     
     right: 250px;
-}
-
-#add-pawn-window {
-    right: 250px;
-    bottom: 200px;
-}
-
-#pawn-name-input {
-    width: 80px;
-    display: block;
-}
-
-.pawn-tile-input {
-    width: 40px;
-    display: block;
-}
-
-#pawn-window {
-    left: 250px;
-}
-
-#player-window {
-    left: 250px;
-    bottom: 200px;
-    
+    line-height: 12px;
 }
 
 

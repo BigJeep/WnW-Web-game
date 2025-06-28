@@ -8,7 +8,7 @@
 </head>
 <body>
     
-    <h1>WnW Web game v 0.01</h1>
+    <h1>WnW Web game v 0.02</h1>
     <div id="main-viewport">
         <div id="tile-board" class="board"></div>
         <div id="player-board" class="board"></div>
@@ -19,33 +19,11 @@
     
 
     <div id="tile-properties-window" class="window"></div>
-    <div id="add-pawn-window" class="window">
-        <div><b>Create new pawn</b></div>
-        <label>Pawn Name: </label><input id="pawn-name-input" maxlength="10">
-        <label>At tile: </label>
-        <input id="pawn-x-input" class="pawn-tile-input" type="number" placeholder="x" min="1">
-        <input id="pawn-y-input" class="pawn-tile-input"type="number" placeholder="y" min="1">
-        <button id="new-pawn-btn">New Pawn</button>
-    </div>
-    <div id="pawn-window" class="window">
-        <div id="pawn-window-data"></div>
-        <div id="pawn-window-buttons" hidden>
-            <button id="pawn-cancel-button" class="pawn-button">Cancel</button>
-            <button id="pawn-play-button" class="pawn-button">Play</button>
-        </div>
-    </div>
-
-    <div id="player-window" class="window">
-        <div id="player-window-data"></div>
-        <hr>
-        <div id="player-buttons" hidden>
-            <button id="pawn-move-button" class="player-button">Move</button>
-            <button id="pawn-attack-button" class="player-button">Attack</button>
-            <button id="pawn-skip-button" class="player-button">Skip</button>
-        </div>
-    </div>
-
     
+    <div id="custom-context-menu"></div>
+    
+
+    <div id="debug-window" class="window"></div>
     <script src="main.js"></script>
 </body>
 </html>
