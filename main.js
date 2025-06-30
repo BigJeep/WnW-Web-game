@@ -11,6 +11,8 @@ function myDebug (content) {
     debugWindow.scrollTop = debugWindow.scrollHeight;
 }
 
+// test
+
 
 // html elements / DOM
 
@@ -20,8 +22,11 @@ const tileBoard         = document.getElementById('tile-board');
 const playerBoard       = document.getElementById('player-board');
 // tile data window
 const tileDataWindow    = document.getElementById('tile-properties-window');
-    
+
+// context menu
 const myContextMenu     = document.getElementById('custom-context-menu');
+
+
 
 // basic constants/parameters
 const boardSize = 8; // 8x8 default size
@@ -30,10 +35,19 @@ const floorMin = -1;
 const floorMax = 3;
 const playerBoardRect = playerBoard.getBoundingClientRect();
 
+let mouseX
+let mouseY
 
 
 // Listeners and Events
 
+
+document.addEventListener("click", () => {if (myContextMenu.style.display == "block") {myContextMenu.style.display = "none";myDebug("context menu hidden");}})
+document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX; 
+    mouseY = e.clientY; 
+    // myDebug (`${mouseX}, ${mouseY}`);
+})
 
 
 // CONSTRUCT BOARD + TILE PROPERTIES
@@ -49,7 +63,6 @@ for (let count = 0, x = 0, y = 0; count < boardSize * boardSize; count++, y++) {
     newTile.x = x + 1;
     newTile.y = y + 1;
     
-    
     tileBoard.style.setProperty('--board-size', boardSize);
     newTile.addEventListener ("mouseenter", showTileProperties);
     newTile.addEventListener ("contextmenu", openActionMenu);
@@ -58,9 +71,16 @@ for (let count = 0, x = 0, y = 0; count < boardSize * boardSize; count++, y++) {
 }
 
 function openActionMenu (e) {
+    
     e.preventDefault();
-    myContextMenu.styles.display = block;
+    myContextMenu.style.display = "block";
+    myContextMenu.style.top = mouseX + "px";
+    myContextMenu.style.left = mouseY + "px";
     myDebug ("context menu")
+    myDebug (`mouse ${mouseX}, ${mouseY}`);
+    const rect = myContextMenu.getBoundingClientRect();
+    myDebug (`rect ${rect.top}, ${rect.top}`);
+    // PAREI AQUI QUE PREGUIÇA zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 
 }
 
