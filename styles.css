@@ -8,9 +8,13 @@
     bottom: 0;
     width: 800px;    
     height: 800px;
-    /* overflow: hidden; */
+    overflow: auto;
     border: solid 1px #000;
 }
+/* 
+#id-viewport {
+    overflow: scroll;
+} */
 
 .board {
     position: relative;

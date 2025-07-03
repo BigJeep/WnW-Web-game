@@ -9,9 +9,14 @@
 <body>
     
     <h1>WnW Web game v 0.02</h1>
+    <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="100" placeholder="100" id="zoom-slide">
+    </div>
     <div id="main-viewport">
-        <div id="tile-board" class="board"></div>
-        <div id="player-board" class="board"></div>
+        <div id="zoom-viewport">
+            <div id="tile-board" class="board"></div>
+            <div id="player-board" class="board"></div>
+        </div>
 
 
     </div>
