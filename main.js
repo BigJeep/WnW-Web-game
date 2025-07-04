@@ -31,7 +31,7 @@ const myContextMenu     = document.getElementById('custom-context-menu');
 
 
 // basic constants/parameters
-const boardSize = 24; // better not go beyond 24 for now
+const boardSize = 8; // better not go beyond 24 for now
 const boardTiles = Array.from(Array(boardSize), (i)=>i=Array(boardSize)); // tile ELEMENTS are stored here, in a 2d array, to be later called by their x-1,y-1
 const floorMin = -1;
 const floorMax = 3;
@@ -41,9 +41,11 @@ let mouseX
 let mouseY
 
 
-// Listeners and Events
+// Initialization, Listeners, Events
 
 zoomSlide.addEventListener ("input", resizeBoard);
+document.addEventListener ("wheel", mouseWheelZoom, {passive: false});
+
 
 document.addEventListener("click", () => {if (myContextMenu.style.display == "block") {myContextMenu.style.display = "none";myDebug("context menu hidden");}})
 document.addEventListener("mousemove", (e) => {
@@ -70,14 +72,34 @@ for (let count = 0, x = 0, y = 0; count < boardSize * boardSize; count++, y++) {
     newTile.addEventListener ("mouseenter", showTileProperties);
     newTile.addEventListener ("contextmenu", openActionMenu);
     
+
     boardTiles[x][y] = newTile;
 }
 
-function resizeBoard () {
+function resizeBoard (event, amount = 1600) {
     const slideValue = zoomSlide.value;
-    // myDebug(slideValue);
-    zoomViewport.style.width = 1600 - slideValue*8+"px";
-    zoomViewport.style.height = 800 - slideValue*8+"px";
+    
+    myDebug(slideValue);
+    zoomViewport.style.width = amount - slideValue*8+"px";
+    zoomViewport.style.height = amount/2 - slideValue*8+"px";
+}
+
+function mouseWheelZoom (event) {
+    
+    if (event.deltaY > 0) {
+        zoomSlide.value += 10;
+        
+        myDebug (zoomSlide.value);
+        resizeBoard (amount = zoomSlide.value);
+        //myDebug ("down")
+    }
+    else {
+        zoomSlide.value -= 10;
+        resizeBoard (amount = zoomSlide.value)
+        //myDebug ("up")
+    }
+    event.preventDefault();
+
 }
 
 function openActionMenu (e) {
