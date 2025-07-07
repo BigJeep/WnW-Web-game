@@ -39,9 +39,11 @@ const playerBoardRect = playerBoard.getBoundingClientRect();
 
 let mouseX
 let mouseY
+let isMouseInsideViewPort = false
 
 
 // Initialization, Listeners, Events
+
 
 zoomSlide.addEventListener ("input", resizeBoard);
 document.addEventListener ("wheel", mouseWheelZoom, {passive: false});
@@ -51,6 +53,17 @@ document.addEventListener("click", () => {if (myContextMenu.style.display == "bl
 document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX; 
     mouseY = e.clientY; 
+    const mainViewportRect = mainViewport.getBoundingClientRect();
+    if( 
+    mouseY < mainViewportRect.bottom &&
+    mouseY > mainViewportRect.y &&
+    mouseX < mainViewportRect.right &&
+    mouseX > mainViewportRect.x
+    ){
+        isMouseInsideViewPort = true;
+    } else {
+    isMouseInsideViewPort = false;
+    }
     // myDebug (`${mouseX}, ${mouseY}`);
 })
 
@@ -76,30 +89,33 @@ for (let count = 0, x = 0, y = 0; count < boardSize * boardSize; count++, y++) {
     boardTiles[x][y] = newTile;
 }
 
-function resizeBoard (event, amount = 1600) {
+function resizeBoard () {
     const slideValue = zoomSlide.value;
+
     
-    myDebug(slideValue);
-    zoomViewport.style.width = amount - slideValue*8+"px";
-    zoomViewport.style.height = amount/2 - slideValue*8+"px";
+    zoomViewport.style.width = 1600 - slideValue*8+"px";
+    zoomViewport.style.height = 1600/2 - slideValue*8+"px";
 }
 
 function mouseWheelZoom (event) {
     
-    if (event.deltaY > 0) {
-        zoomSlide.value += 10;
-        
-        myDebug (zoomSlide.value);
-        resizeBoard (amount = zoomSlide.value);
-        //myDebug ("down")
-    }
-    else {
-        zoomSlide.value -= 10;
-        resizeBoard (amount = zoomSlide.value)
-        //myDebug ("up")
-    }
+
+    if (isMouseInsideViewPort){
     event.preventDefault();
 
+    const step = 5
+    let newValue = parseInt(zoomSlide.value);
+    if (event.deltaY > 0) {
+        newValue += step;
+    
+    }
+    else {
+        newValue -= step;
+    
+    }
+    zoomSlide.value = newValue
+    resizeBoard ()
+    }
 }
 
 function openActionMenu (e) {
