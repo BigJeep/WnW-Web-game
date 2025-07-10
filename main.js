@@ -48,8 +48,17 @@ let isMouseInsideViewPort = false
 zoomSlide.addEventListener ("input", resizeBoard);
 document.addEventListener ("wheel", mouseWheelZoom, {passive: false});
 
+myContextMenu.addEventListener ("contextmenu", (e) => e.preventDefault());
+document.addEventListener("click", () => {
+    const menuRect = myContextMenu.getBoundingClientRect();
+    if (myContextMenu.style.display == "block" && 
+        !(mouseY < menuRect.bottom && 
+            mouseY > menuRect.y &&
+            mouseX < menuRect.right &&
+            mouseX > menuRect.x) // checks if cursor is outside the context menu div
+        ) {
+            myContextMenu.style.display = "none";myDebug("context menu hidden");}})
 
-document.addEventListener("click", () => {if (myContextMenu.style.display == "block") {myContextMenu.style.display = "none";myDebug("context menu hidden");}})
 document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX; 
     mouseY = e.clientY; 
@@ -58,13 +67,13 @@ document.addEventListener("mousemove", (e) => {
     mouseY < mainViewportRect.bottom &&
     mouseY > mainViewportRect.y &&
     mouseX < mainViewportRect.right &&
-    mouseX > mainViewportRect.x
+    mouseX > mainViewportRect.x // checks if cursor is inside the main viewport
     ){
         isMouseInsideViewPort = true;
     } else {
     isMouseInsideViewPort = false;
     }
-    // myDebug (`${mouseX}, ${mouseY}`);
+    
 })
 
 
@@ -99,7 +108,6 @@ function resizeBoard () {
 
 function mouseWheelZoom (event) {
     
-
     if (isMouseInsideViewPort){
     event.preventDefault();
 
@@ -119,16 +127,13 @@ function mouseWheelZoom (event) {
 }
 
 function openActionMenu (e) {
-    
     e.preventDefault();
     myContextMenu.style.display = "block";
-    myContextMenu.style.top = mouseX + "px";
-    myContextMenu.style.left = mouseY + "px";
+    myContextMenu.style.left = mouseX + "px";
+    myContextMenu.style.top = mouseY + "px";
     myDebug ("context menu")
-    myDebug (`mouse ${mouseX}, ${mouseY}`);
     const rect = myContextMenu.getBoundingClientRect();
-    myDebug (`rect ${rect.top}, ${rect.top}`);
-    // PAREI AQUI QUE PREGUIÇA zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    
 
 }
 
