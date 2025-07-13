@@ -1,6 +1,7 @@
 // my debug console
 const debugWindow  = document.getElementById('debug-window');
 const debugContent = new Array(1);
+const debugRealTimeWindow = document.getElementById ('real-time-debug-window');
 
 function myDebug (content) {
     index = debugContent.length > 0 ? debugContent.length + 1: 0;
@@ -13,6 +14,7 @@ function myDebug (content) {
 
 // test
 
+myDebug ("initializing")
 
 // html elements / DOM
 
@@ -31,7 +33,9 @@ const myContextMenu     = document.getElementById('custom-context-menu');
 
 
 // basic constants/parameters
-const boardSize = 8; // better not go beyond 24 for now
+const boardSize = 15; // better not go beyond 24 for now
+const borderLinePx = boardSize > 8 ? 1-0.05*(boardSize-8) : 1; // 1-0.00625*(boardSize-8)
+myDebug(borderLinePx);
 const boardTiles = Array.from(Array(boardSize), (i)=>i=Array(boardSize)); // tile ELEMENTS are stored here, in a 2d array, to be later called by their x-1,y-1
 const floorMin = -1;
 const floorMax = 3;
@@ -40,7 +44,7 @@ const playerBoardRect = playerBoard.getBoundingClientRect();
 let mouseX
 let mouseY
 let isMouseInsideViewPort = false
-
+const mainViewportRect = mainViewport.getBoundingClientRect();
 
 // Initialization, Listeners, Events
 
@@ -57,12 +61,19 @@ document.addEventListener("click", () => {
             mouseX < menuRect.right &&
             mouseX > menuRect.x) // checks if cursor is outside the context menu div
         ) {
-            myContextMenu.style.display = "none";myDebug("context menu hidden");}})
+            myContextMenu.style.display = "none";
+            myDebug("context menu hidden");
+        }
+    }
+    )
 
 document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX; 
     mouseY = e.clientY; 
-    const mainViewportRect = mainViewport.getBoundingClientRect();
+
+    debugRealTimeWindow.innerText = "Cursor X, Y: " + mouseX + ", " + mouseY;
+
+    
     if( 
     mouseY < mainViewportRect.bottom &&
     mouseY > mainViewportRect.y &&
@@ -73,6 +84,8 @@ document.addEventListener("mousemove", (e) => {
     } else {
     isMouseInsideViewPort = false;
     }
+
+
     
 })
 
@@ -94,16 +107,26 @@ for (let count = 0, x = 0, y = 0; count < boardSize * boardSize; count++, y++) {
     newTile.addEventListener ("mouseenter", showTileProperties);
     newTile.addEventListener ("contextmenu", openActionMenu);
     
+    newTile.style.boxShadow = `inset 0 0 0 ${borderLinePx > 0 ? borderLinePx : 0.01}px #000`;
 
     boardTiles[x][y] = newTile;
 }
 
 function resizeBoard () {
     const slideValue = zoomSlide.value;
-
+    const scale = 3 - zoomSlide.value/50;
+    const borderSize = borderLinePx > 0 ? borderLinePx : 0.01 ;
+    const tiles = document.querySelectorAll('.board-tile')
     
-    zoomViewport.style.width = 1600 - slideValue*8+"px";
-    zoomViewport.style.height = 1600/2 - slideValue*8+"px";
+    zoomViewport.style.transform = `scale(${scale})`;
+    tiles.forEach(e => {
+        e.style.boxShadow = `inset 0 0 0 ${borderSize}px #000`;
+    });
+        
+    
+    
+    // // zoomViewport.style.width = 1600 - slideValue*8+"px";
+    // // zoomViewport.style.height = 1600/2 - slideValue*8+"px";
 }
 
 function mouseWheelZoom (event) {
@@ -116,14 +139,21 @@ function mouseWheelZoom (event) {
     if (event.deltaY > 0) {
         newValue += step;
     
+        
     }
     else {
         newValue -= step;
+        
+
     
     }
     zoomSlide.value = newValue
     resizeBoard ()
     }
+
+    
+
+
 }
 
 function openActionMenu (e) {

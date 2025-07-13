@@ -8,7 +8,7 @@
     bottom: 0;
     width: 800px;    
     height: 800px;
-    overflow: auto;
+    overflow: hidden;
     border: solid 1px #000;
 }
 /* 
@@ -37,8 +37,8 @@ aspect-ratio: 1/1;
     font-size: 10px;
     text-align: center;
     background-color: #FFF;
-    border: solid 1px #000;
-
+    /* border: solid 1px #000; */
+    /*box-shadow: inset 0 0 0 1px #000;*/
     aspect-ratio: 1/1;
     /* flex: 1 0 calc(100% / var(--board-size) - 1px); */
 
@@ -57,11 +57,12 @@ aspect-ratio: 1/1;
 
 #custom-context-menu {
     display: none;
-    border: dotted 1px #000;
+    border: dotted 2px #FFF;
     background-color: black;
     position: absolute;
-    width: 50px;
-    height: 200px;
+    width: 100px;
+    height: 15px;
+    border-radius: 25%;
 }
 
 
@@ -86,6 +87,12 @@ aspect-ratio: 1/1;
     line-height: 15px;
     overflow-y: scroll;
 
+}
+
+#real-time-debug-window {
+    top: 108px;
+    right: 50px;
+    width: 160px;
 }
 
 
