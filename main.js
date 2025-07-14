@@ -34,12 +34,13 @@ const myContextMenu     = document.getElementById('custom-context-menu');
 
 // basic constants/parameters
 const boardSize = 15; // better not go beyond 24 for now
-const borderLinePx = boardSize > 8 ? 1-0.05*(boardSize-8) : 1; // 1-0.00625*(boardSize-8)
-myDebug(borderLinePx);
+const borderLinePx = boardSize > 8 ? 1-0.05*(boardSize-8) : 1; //
+myDebug("tile border size: " + borderLinePx);
 const boardTiles = Array.from(Array(boardSize), (i)=>i=Array(boardSize)); // tile ELEMENTS are stored here, in a 2d array, to be later called by their x-1,y-1
 const floorMin = -1;
 const floorMax = 3;
 const playerBoardRect = playerBoard.getBoundingClientRect();
+
 
 let mouseX
 let mouseY
@@ -48,7 +49,7 @@ const mainViewportRect = mainViewport.getBoundingClientRect();
 
 // Initialization, Listeners, Events
 
-
+zoomViewport.style.transform = `scale(${3 - zoomSlide.value/50}) translate(0, 0)`;
 zoomSlide.addEventListener ("input", resizeBoard);
 document.addEventListener ("wheel", mouseWheelZoom, {passive: false});
 
@@ -113,12 +114,16 @@ for (let count = 0, x = 0, y = 0; count < boardSize * boardSize; count++, y++) {
 }
 
 function resizeBoard () {
-    const slideValue = zoomSlide.value;
     const scale = 3 - zoomSlide.value/50;
     const borderSize = borderLinePx > 0 ? borderLinePx : 0.01 ;
     const tiles = document.querySelectorAll('.board-tile')
+    const scaleRegex = /scale\(.*?\)/
     
-    zoomViewport.style.transform = `scale(${scale})`;
+    // zoomViewport.style.transform = `scale(${scale})`;
+    
+    // myDebug(scaleRegex.test(zoomViewport.style.transform));
+    // myDebug(zoomViewport.style.transform.match(scaleRegex));
+    zoomViewport.style.transform = zoomViewport.style.transform.replace(scaleRegex, `scale(${scale})`);
     tiles.forEach(e => {
         e.style.boxShadow = `inset 0 0 0 ${borderSize}px #000`;
     });
@@ -131,6 +136,8 @@ function resizeBoard () {
 
 function mouseWheelZoom (event) {
     
+    const translateRegex = /translate\(.*?\)/
+
     if (isMouseInsideViewPort){
     event.preventDefault();
 
@@ -149,6 +156,12 @@ function mouseWheelZoom (event) {
     }
     zoomSlide.value = newValue
     resizeBoard ()
+    
+    // MOVE TO CURSOR POSITION HERE
+    zoomViewport.style.transform = zoomViewport.style.transform.replace(translateRegex, `translate(${0}px, ${0}px)`);
+    
+
+
     }
 
     
